@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Registration</title>
+</head>
+
+<body>
+    <header class="heading"> Registration </header>
+    <div class="msg-container">
+        {% for msg in messages %}
+        <div class="msg {{ msg.tags }}">
+            {{ msg }}
+        </div>
+        {% endfor %}
+    </div>
+    <main>
+        <form method="POST" action="{% url 'register'%}" class="details">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Enter your name:" class="input">
+            <input type="email" name="email" placeholder="Enter your email:" class="input">
+            <input type="text" name="phn" placeholder="Enter your Phone Number:" class="input">
+            <input type="password" name="pass" placeholder="Enter your Password:" class="input">
+            <input type="password" name="conf-pass" placeholder="Confirm your Password:" class="input">
+            <section class="btns">
+                <a href="{% url 'register' %}"><button type="submit" class="submit">Register</button></a>
+            </section>
+        </form>
+    </main>
+    {% if registration_success %}
+    <script>
+        setTimeout(function () {
+            window.location.href = "{% url 'login' %}";
+        }, 2000);
+    </script>
+    {% endif %}
+</body>
+
+</html>

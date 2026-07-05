@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Edit Student Profiles</title>
+</head>
+
+<body>
+    <div class="section">
+        <header class="heading"> Edit Student Details </header>
+        <a href="{% url 'logout' %}"><button class="submit">Logout</button></a>
+    </div>
+    <div class="msg-container">
+        {% for msg in messages %}
+        <div class="msg {{ msg.tags }}">
+            {{ msg }}
+        </div>
+        {% endfor %}
+    </div>
+    <main>
+        <form method="POST" action="{% url 'edit_student_view' student.pk %}" class="details">
+            {% csrf_token %}
+            <input type="text" name="name" value="{{ student.name }}" placeholder="Enter Student name:" class="input">
+            <input type="text" name="roll" value="{{ student.roll_no }}" placeholder="Enter Student roll no:"
+                class="input">
+            <input type="text" name="branch" value="{{ student.branch }}" placeholder="Enter Student branch:"
+                class="input">
+            <input type="text" name="section" value="{{ student.section }}" placeholder="Enter Student Section:"
+                class="input">
+            <input type="text" name="place" value="{{ student.place }}" placeholder="Enter Student Place:"
+                class="input">
+            <section class="btns">
+                <a href="{% url 'edit_student_view' student.pk %}"><button type="submit"
+                        class="submit">Save</button></a>
+                <a href="{% url 'dashboard' %}" class="submit"
+                    style="background-color: #64748B; text-decoration: none; text-align: center;">Cancel</a>
+            </section>
+        </form>
+    </main>
+    {% if editing_success %}
+    <script>
+        setTimeout(function () {
+            window.location.href = "{% url 'dashboard' %}";
+        }, 2000);
+    </script>
+    {% endif %}
+</body>
+
+</html>

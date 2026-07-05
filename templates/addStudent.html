@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Student Profiles</title>
+</head>
+
+<body>
+    <div class="section">
+        <header class="heading"> Student Registration </header>
+        <a href="{% url 'logout' %}"><button class="submit">Logout</button></a>
+    </div>
+    <div class="msg-container">
+        {% for msg in messages %}
+        <div class="msg {{ msg.tags }}">
+            {{ msg }}
+        </div>
+        {% endfor %}
+    </div>
+    <main>
+        <form method="POST" action="{% url 'add_student'%}" class="details">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Enter Student name:" class="input">
+            <input type="text" name="roll" placeholder="Enter Student roll no:" class="input">
+            <input type="text" name="branch" placeholder="Enter Student branch:" class="input">
+            <input type="text" name="section" placeholder="Enter Student Section:" class="input">
+            <input type="text" name="place" placeholder="Enter Student Place:" class="input">
+            <section class="btns">
+                <a href="{% url 'add_student' %}"><button type="submit" class="submit">Register</button></a>
+            </section>
+        </form>
+    </main>
+    {% if registration_success %}
+    <script>
+        setTimeout(function () {
+            window.location.href = "{% url 'dashboard' %}";
+        }, 2000);
+    </script>
+    {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Login</title>
+</head>
+
+<body>
+    <header class="heading"> Login </header>
+    <div class="msg-container">
+        {% for msg in messages %}
+        <div class="msg {{ msg.tags }}">
+            {{ msg }}
+        </div>
+        {% endfor %}
+    </div>
+    <main>
+        <form method="post" action="{% url 'login'%}" class="details">
+            {% csrf_token %}
+            <input type="text" name="user" placeholder="Enter your User name:" class="input">
+            <input type="password" name="pass" placeholder="Enter your Password:" class="input">
+            <section class="btns">
+                <button type="submit" class="submit">Login</button>
+            </section>
+        </form>
+    </main>
+    {% if login_success %}
+    <script>
+        setTimeout(function () {
+            window.location.href = "{% url 'dashboard' %}";
+        }, 2000);
+    </script>
+    {% endif %}
+</body>
+
+</html>

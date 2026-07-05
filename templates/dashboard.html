@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <header class="heading">Welcome <span class="user-highlight">{{ user }}</span> </header>
+    <main>
+        <section class="section">
+            <div class="list-container">
+                <h2 class="section-title">ALL student data</h2>
+                {% if students %}
+                <ul class="student-list">
+                    {% for student in students %}
+                    <li class="student-item">
+                        <div class="student-info">
+                            <span class="student-name">{{ student.name }}</span>
+                            <span class="student-roll">{{ student.roll_no }}</span>
+                        </div>
+                        <div class="student-actions">
+                            <a href="{% url 'edit_student_view' student.pk %}" class="btn-edit">Edit</a>
+                            <a href="{% url 'delete_student' student.pk %}" class="btn-delete"
+                                onclick="return confirm('Are you sure?');">Delete</a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No student records found in the database.</p>
+                {% endif %}
+            </div>
+        </section>
+
+        <section class="btns">
+            <a href="{% url 'add_student' %}"><button class="submit">Add Student</button></a>
+            <a href="{% url 'logout' %}"><button class="submit">Logout</button></a>
+        </section>
+    </main>
+</body>
+
+</html>
